@@ -1,5 +1,4 @@
 node_modules
 node_modules
 
-NEXT_PUBLIC_SUPABASE_URL=https://uipleirprvetlgmkptwb.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=sb_publishable_GtI4AkcDxfCwl-OkIn0mmg_YcmFHytB
+.env.local

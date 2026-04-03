@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
-import DailyPractice from '@/components/DailyPractice';
-import TranslationTest from '@/components/TranslationTest';
-import FillBlank from '@/components/FillBlank';
-import ProgressHero from '@/components/ProgressHero';
-import ModeCard from '@/components/ModeCard';
+import DailyPractice from '../../components/DailyPractice';
+import TranslationTest from '../../components/TranslationTest';
+import FillBlank from '../../components/FillBlank';
+import ProgressHero from '../../components/ProgressHero';
+import ModeCard from '../../components/ModeCard';
 
 export default function PracticePage() {
   const router = useRouter();
