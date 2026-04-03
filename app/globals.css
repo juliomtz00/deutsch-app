@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .font-fraunces {
+    font-family: 'Fraunces', serif;
+  }
+  
+  .font-sans {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --pristine: #F5F3EE;
+  --crystal-rose: #FFD6DD;
+  --nasturtium: #FF6B58;
+  --cascade: #2B9B8F;
+  --parasailing: #1E5F57;
+  --nine-iron: #2C3338;
+}
+
+body {
+  @apply bg-pristine text-nine-iron font-sans;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

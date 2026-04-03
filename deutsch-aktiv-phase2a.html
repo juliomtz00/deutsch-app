@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch Aktiv | Dein Wortschatztrainer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌱</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Moodboard Pantone Colors */
+            --pristine: #F5F3EE;
+            --crystal-rose: #FFD6DD;
+            --nasturtium: #FF6B58;
+            --cascade: #2B9B8F;
+            --parasailing: #1E5F57;
+            --nine-iron: #2C3338;
+            
+            /* Semantic colors */
+            --bg: var(--pristine);
+            --primary: var(--nine-iron);
+            --accent-pink: var(--crystal-rose);
+            --accent-coral: var(--nasturtium);
+            --accent-teal: var(--cascade);
+            --accent-dark-teal: var(--parasailing);
+            --text: var(--nine-iron);
+            --text-light: #6B7280;
+            
+            /* UI elements */
+            --card-bg: #FFFFFF;
+            --shadow: 0 2px 20px rgba(44, 51, 56, 0.08);
+            --shadow-lg: 0 8px 40px rgba(44, 51, 56, 0.12);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .date-display {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Progress Hero */
+        .progress-hero {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .progress-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .progress-content {
+                grid-template-columns: 1fr auto;
+            }
+        }
+
+        .progress-text h2 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: var(--accent-coral);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .progress-bg {
+            stroke: var(--accent-pink);
+            opacity: 0.3;
+        }
+
+        .progress-bar {
+            stroke: var(--accent-coral);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percent {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-emoji {
+            font-size: 1.5rem;
+        }
+
+        /* Streak Badge */
+        .streak-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-coral), var(--nasturtium));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 88, 0.3);
+        }
+
+        /* Practice Mode Cards */
+        .practice-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, var(--accent-pink) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mode-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .mode-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .mode-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .mode-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .mode-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Practice Screen */
+        .practice-screen {
+            display: none;
+        }
+
+        .practice-screen.active {
+            display: block;
+        }
+
+        .practice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .back-button {
+            background: var(--card-bg);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-4px);
+        }
+
+        .progress-indicator {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Word Card */
+        .word-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word-card::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--cascade) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .word-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .word-header {
+            margin-bottom: 2rem;
+        }
+
+        .word-german {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            word-break: break-word;
+        }
+
+        .word-translations {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            color: var(--text-light);
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .word-translations.hidden {
+            display: none;
+        }
+
+        .translation-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .translation-label {
+            font-weight: 600;
+            color: var(--accent-teal);
+        }
+
+        .word-preposition {
+            display: inline-block;
+            background: var(--accent-teal);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .word-example {
+            background: var(--accent-pink);
+            padding: 1.5rem;
+            border-radius: 20px;
+            font-style: italic;
+            color: var(--primary);
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-coral);
+        }
+
+        .word-example.hidden {
+            display: none;
+        }
+
+        /* Toggle Button */
+        .toggle-translation-btn {
+            background: var(--accent-pink);
+            color: var(--primary);
+            border: 2px solid var(--accent-coral);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-translation-btn:hover {
+            background: var(--accent-coral);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Textarea */
+        .sentence-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1.25rem;
+            border: 2px solid var(--accent-pink);
+            border-radius: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Test Input Fields */
+        .test-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--accent-pink);
+            border-radius: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            background: var(--card-bg);
+            color: var(--primary);
+        }
+
+        .test-input:focus {
+            outline: none;
+            border-color: var(--accent-coral);
+            box-shadow: 0 0 0 4px rgba(255, 107, 88, 0.1);
+        }
+
+        .test-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        .sentence-input:focus {
+            outline: none;
+            border-color: var(--accent-coral);
+            box-shadow: 0 0 0 4px rgba(255, 107, 88, 0.1);
+        }
+
+        .sentence-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        /* Grammar Check */
+        .grammar-section {
+            margin: 1.5rem 0;
+        }
+
+        .grammar-button {
+            background: var(--cascade);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(43, 155, 143, 0.3);
+        }
+
+        .grammar-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(43, 155, 143, 0.4);
+        }
+
+        .grammar-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .grammar-result {
+            margin-top: 1rem;
+            padding: 1.25rem;
+            border-radius: 20px;
+            background: var(--accent-pink);
+            display: none;
+        }
+
+        .grammar-result.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .grammar-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-coral);
+            margin-bottom: 0.5rem;
+        }
+
+        .grammar-errors {
+            margin-top: 1rem;
+        }
+
+        .grammar-error-item {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .error-message {
+            color: var(--accent-coral);
+            font-weight: 600;
+        }
+
+        .error-suggestion {
+            color: var(--cascade);
+            margin-top: 0.25rem;
+        }
+
+        /* Confidence Rating */
+        .confidence-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 214, 221, 0.3), rgba(255, 214, 221, 0.1));
+            border-radius: 20px;
+        }
+
+        .confidence-label {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .confidence-dots {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .confidence-dot {
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
+            border-radius: 50%;
+            background: var(--accent-pink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .confidence-dot:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-coral);
+        }
+
+        .confidence-dot.active {
+            background: var(--accent-coral);
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(255, 107, 88, 0.4);
+        }
+
+        /* Priority Star */
+        .priority-star {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.3;
+            z-index: 2;
+        }
+
+        .priority-star:hover,
+        .priority-star.active {
+            opacity: 1;
+            transform: scale(1.2) rotate(72deg);
+        }
+
+        .priority-tooltip {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            background: var(--nine-iron);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .priority-star:hover .priority-tooltip {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--accent-coral);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 88, 0.3);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 88, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .secondary-btn {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--accent-pink);
+            box-shadow: none;
+        }
+
+        .secondary-btn:hover {
+            background: var(--accent-pink);
+            box-shadow: 0 4px 15px rgba(255, 214, 221, 0.3);
+        }
+
+        .primary-action-btn {
+            background: linear-gradient(135deg, var(--cascade), var(--parasailing));
+            font-size: 1.1rem;
+            padding: 1.25rem 2.5rem;
+        }
+
+        /* Add Word Section */
+        .add-word-section {
+            background: linear-gradient(135deg, var(--parasailing), var(--cascade));
+            border-radius: 32px;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+
+        .add-word-section h2 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .ai-hint {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 51, 56, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            border-radius: 32px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0;
+            box-shadow: none;
+            transition: color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: none;
+        }
+
+        /* Vocabulary List */
+        .vocab-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .vocab-item {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--accent-pink);
+            transition: background 0.2s ease;
+        }
+
+        .vocab-item:hover {
+            background: rgba(255, 214, 221, 0.3);
+        }
+
+        .vocab-item:last-child {
+            border-bottom: none;
+        }
+
+        .vocab-item-word {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .vocab-item-trans {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Search */
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--accent-pink);
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-coral);
+            box-shadow: 0 0 0 4px rgba(255, 107, 88, 0.1);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: var(--cascade);
+            color: white;
+            padding: 1.25rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+            font-weight: 600;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Translation/Fill-in-Blank Test Modes */
+        .test-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--accent-pink);
+            border-radius: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .test-result {
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 0.5rem;
+        }
+
+        .test-result.correct {
+            background: rgba(43, 155, 143, 0.2);
+            border: 2px solid var(--cascade);
+        }
+
+        .test-result.incorrect {
+            background: rgba(255, 107, 88, 0.2);
+            border: 2px solid var(--accent-coral);
+        }
+
+        .test-answer {
+            font-weight: 600;
+            color: var(--cascade);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .confidence-dots {
+                justify-content: space-around;
+            }
+
+            .priority-star {
+                top: 1rem;
+                right: 1rem;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Screen -->
+        <div id="homeScreen">
+            <header>
+                <div class="header-top">
+                    <div>
+                        <h1>Deutsch Aktiv 🌱</h1>
+                        <p class="date-display" id="dateDisplay"></p>
+                    </div>
+                    <div class="streak-badge" id="streakBadge">
+                        🔥 <span id="streakDays">0</span> Tage
+                    </div>
+                </div>
+            </header>
+
+            <!-- Progress Hero -->
+            <div class="progress-hero">
+                <div class="progress-content">
+                    <div class="progress-text">
+                        <h2>Hi, Jules! 👋</h2>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Deine Lernreise geht weiter!</p>
+                        <div class="progress-stats">
+                            <div>
+                                <div class="stat-icon">📚</div>
+                                <div class="stat-value" id="totalWords">240</div>
+                                <div class="stat-label">Wörter</div>
+                            </div>
+                            <div>
+                                <div class="stat-icon">✨</div>
+                                <div class="stat-value" id="practiceCount">0</div>
+                                <div class="stat-label">Mal geübt</div>
+                            </div>
+                            <div>
+                                <div class="stat-icon">⭐</div>
+                                <div class="stat-value" id="priorityCount">0</div>
+                                <div class="stat-label">Priorität</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="circular-progress">
+                        <svg width="140" height="140">
+                            <circle class="progress-bg" cx="70" cy="70" r="60"></circle>
+                            <circle class="progress-bar" cx="70" cy="70" r="60" 
+                                    stroke-dasharray="377" stroke-dashoffset="377" id="progressCircle"></circle>
+                        </svg>
+                        <div class="progress-center">
+                            <div class="progress-percent" id="progressPercent">0%</div>
+                            <div class="progress-emoji">🌱</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Modes -->
+            <div class="practice-modes">
+                <div class="mode-card" onclick="startPractice('daily')">
+                    <div class="mode-card-content">
+                        <span class="mode-icon">📝</span>
+                        <h3 class="mode-title">Daily Practice</h3>
+                        <p class="mode-description">5 Wörter üben - Übersetzung versteckt, Grammatik checken</p>
+                        <span class="mode-badge">Empfohlen</span>
+                    </div>
+                </div>
+
+                <div class="mode-card" onclick="startPractice('translation')">
+                    <div class="mode-card-content">
+                        <span class="mode-icon">🌍</span>
+                        <h3 class="mode-title">Translation Test</h3>
+                        <p class="mode-description">Nur Deutsch → tippe Englisch & Español!</p>
+                        <span class="mode-badge">Challenge</span>
+                    </div>
+                </div>
+
+                <div class="mode-card" onclick="startPractice('fillblank')">
+                    <div class="mode-card-content">
+                        <span class="mode-icon">✏️</span>
+                        <h3 class="mode-title">Fill in the Blank</h3>
+                        <p class="mode-description">Lückentext ausfüllen - teste dein Gedächtnis!</p>
+                        <span class="mode-badge">Challenge</span>
+                    </div>
+                </div>
+
+                <div class="mode-card" onclick="viewAllVocab()">
+                    <div class="mode-card-content">
+                        <span class="mode-icon">📚</span>
+                        <h3 class="mode-title">Alle Wörter</h3>
+                        <p class="mode-description">Durchsuche deine gesamte Wortschatz-Sammlung</p>
+                    </div>
+                </div>
+
+                <div class="mode-card" onclick="exportData()">
+                    <div class="mode-card-content">
+                        <span class="mode-icon">💾</span>
+                        <h3 class="mode-title">Daten exportieren</h3>
+                        <p class="mode-description">Sichere deine Lernfortschritte</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Word Section -->
+            <div class="add-word-section">
+                <h2>➕ Neues Wort hinzufügen</h2>
+                <p style="margin-bottom: 1.5rem; opacity: 0.9;">Gib ein deutsches Wort ein - wir füllen den Rest automatisch aus!</p>
+                
+                <div class="form-group">
+                    <label>Deutsches Wort *</label>
+                    <input type="text" id="newWordGerman" placeholder="z.B. eintauchen oder sich auseinandersetzen">
+                    <p class="ai-hint">✨ Reflexive Verben automatisch erkannt</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Englisch</label>
+                    <input type="text" id="newWordEnglish" placeholder="wird automatisch ausgefüllt..." readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Español</label>
+                    <input type="text" id="newWordSpanish" placeholder="wird automatisch ausgefüllt..." readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Präposition</label>
+                    <input type="text" id="newWordPrep" placeholder="wird automatisch ausgefüllt..." readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Beispielsatz</label>
+                    <textarea id="newWordExample" rows="3" placeholder="wird automatisch ausgefüllt..." readonly></textarea>
+                </div>
+
+                <button onclick="fetchWordData()" style="margin-right: 1rem;">🔍 Wort nachschlagen</button>
+                <button onclick="addNewWord()" class="secondary-btn" style="background: white; color: var(--parasailing);">+ Wort speichern</button>
+                <div class="success-message" id="successMessage">✓ Wort erfolgreich hinzugefügt!</div>
+            </div>
+        </div>
+
+        <!-- Practice Screen -->
+        <div id="practiceScreen" class="practice-screen">
+            <div class="practice-header">
+                <button class="back-button" onclick="backToHome()">← Zurück</button>
+                <div class="progress-indicator">
+                    <span id="currentWord">1</span> / <span id="totalWordsInPractice">5</span>
+                </div>
+            </div>
+
+            <div id="practiceContent"></div>
+
+            <div class="button-group" id="practiceButtons">
+                <!-- Buttons dynamically inserted based on mode -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Vocabulary List -->
+    <div class="modal" id="vocabModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Alle Wörter</h2>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Wort suchen..." oninput="filterVocab()">
+            </div>
+            
+            <div class="vocab-list" id="vocabList"></div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================
+        // INITIAL VOCABULARY (240+ WORDS)
+        // =====================================
+        const initialVocab = [
+            {german: "das Wachstum", english: "growth", spanish: "crecimiento", prep: "", example: "Das wirtschaftliche Wachstum war bemerkenswert.", priority: 0},
+            {german: "vereinbar", english: "compatible", spanish: "compatible", prep: "mit + Dat", example: "Beruf und Familie sind oft schwer vereinbar.", priority: 0},
+            {german: "der Wohlstand", english: "prosperity", spanish: "prosperidad", prep: "", example: "Der Wohlstand eines Landes hängt von vielen Faktoren ab.", priority: 0},
+            {german: "verzweifeln", english: "to despair", spanish: "desesperarse", prep: "an + Dat", example: "Man sollte nicht an dieser Aufgabe verzweifeln.", priority: 0},
+            {german: "verschwenden", english: "to waste", spanish: "desperdiciar", prep: "", example: "Man sollte keine Ressourcen verschwenden.", priority: 0},
+            {german: "vertauschen", english: "to swap", spanish: "intercambiar", prep: "", example: "Die Zwillinge haben ihre Jacken vertauscht.", priority: 0},
+            {german: "unterschätzen", english: "to underestimate", spanish: "subestimar", prep: "", example: "Man sollte die Schwierigkeit nicht unterschätzen.", priority: 0},
+            {german: "verlangen", english: "to demand", spanish: "exigir", prep: "", example: "Diese Aufgabe verlangt viel Konzentration.", priority: 0},
+            {german: "schwach", english: "weak", spanish: "débil", prep: "", example: "Nach der Krankheit fühlte er sich noch schwach.", priority: 0},
+            {german: "kaum", english: "hardly", spanish: "apenas", prep: "", example: "Kaum jemand hat diese Chance genutzt.", priority: 0},
+            {german: "die Bewertung", english: "assessment", spanish: "evaluación", prep: "", example: "Die Bewertung der Arbeit erfolgt nach klaren Kriterien.", priority: 0},
+            {german: "der Begriff", english: "concept", spanish: "concepto", prep: "", example: "Dieser Begriff ist schwer zu definieren.", priority: 0},
+            {german: "die Quelle", english: "source", spanish: "fuente", prep: "", example: "Die Quelle des Problems muss gefunden werden.", priority: 0},
+            {german: "das Ereignis", english: "event", spanish: "acontecimiento", prep: "", example: "Dieses Ereignis hatte große Auswirkungen.", priority: 0},
+            {german: "verwalten", english: "to administer", spanish: "administrar", prep: "", example: "Die Universität verwaltet die Studentendaten.", priority: 0},
+            {german: "zugreifen", english: "to access", spanish: "acceder", prep: "auf + Akk", example: "Man kann auf die Daten online zugreifen.", priority: 0},
+            {german: "forschen", english: "to research", spanish: "investigar", prep: "an + Dat", example: "Wissenschaftler forschen an neuen Methoden.", priority: 0},
+            {german: "die Bewegung", english: "movement", spanish: "movimiento", prep: "", example: "Die Bewegung für Klimaschutz wächst.", priority: 0},
+            {german: "bewegen", english: "to move", spanish: "mover", prep: "zu + Dat", example: "Diese Argumente können die Leute bewegen.", priority: 0},
+            {german: "die Werbung", english: "advertisement", spanish: "publicidad", prep: "für + Akk", example: "Die Werbung erreicht viele Menschen.", priority: 0},
+            {german: "auslassen", english: "to leave out", spanish: "omitir", prep: "", example: "Man sollte keine wichtigen Details auslassen.", priority: 0},
+            {german: "die Verwaltung", english: "administration", spanish: "administración", prep: "", example: "Die Verwaltung ist für die Organisation zuständig.", priority: 0},
+            {german: "die Aufmerksamkeit", english: "attention", spanish: "atención", prep: "", example: "Diese Präsentation erfordert volle Aufmerksamkeit.", priority: 0},
+            {german: "entnehmen", english: "to extract", spanish: "extraer", prep: "aus + Dat", example: "Dem Text kann man wichtige Informationen entnehmen.", priority: 0},
+            {german: "sobald", english: "as soon as", spanish: "tan pronto como", prep: "", example: "Sobald die Ergebnisse vorliegen, können wir entscheiden.", priority: 0},
+            {german: "bald", english: "soon", spanish: "pronto", prep: "", example: "Wir treffen uns bald.", priority: 0},
+            {german: "anbieten", english: "to offer", spanish: "ofrecer", prep: "", example: "Die Universität kann verschiedene Kurse anbieten.", priority: 0},
+            {german: "zumindest", english: "at least", spanish: "al menos", prep: "", example: "Zumindest 50% der Studenten haben teilgenommen.", priority: 0},
+            {german: "empfinden", english: "to feel", spanish: "sentir", prep: "als + Akk", example: "Viele Menschen empfinden Stress bei der Arbeit.", priority: 0},
+            {german: "ziemlich", english: "quite", spanish: "bastante", prep: "", example: "Die Aufgabe war ziemlich schwierig.", priority: 0},
+            {german: "das Wesen", english: "essence", spanish: "esencia", prep: "", example: "Das Wesen der Demokratie ist die Freiheit.", priority: 0},
+            {german: "zwingen", english: "to force", spanish: "forzar", prep: "zu + Dat", example: "Niemand sollte zu etwas gezwungen werden.", priority: 0},
+            {german: "furchtbar", english: "terrible", spanish: "terrible", prep: "", example: "Der Verkehr war furchtbar.", priority: 0},
+            {german: "schmal", english: "narrow", spanish: "estrecho", prep: "", example: "Die Straße ist sehr schmal.", priority: 0},
+            {german: "abbiegen", english: "to turn", spanish: "doblar", prep: "", example: "An der Kreuzung muss man links abbiegen.", priority: 0},
+            {german: "verteilen", english: "to distribute", spanish: "distribuir", prep: "", example: "Die Aufgaben wurden gleichmäßig verteilt.", priority: 0},
+            {german: "fehlen", english: "to be missing", spanish: "faltar", prep: "Dat", example: "Mir fehlen die richtigen Worte.", priority: 0},
+            {german: "vermeiden", english: "to avoid", spanish: "evitar", prep: "", example: "Man sollte Missverständnisse vermeiden.", priority: 0},
+            {german: "besonders", english: "especially", spanish: "especialmente", prep: "", example: "Besonders in großen Städten ist die Luftverschmutzung hoch.", priority: 0},
+            {german: "umfassen", english: "to comprise", spanish: "comprender", prep: "", example: "Die Studie umfasst 500 Teilnehmer.", priority: 0},
+            {german: "sich unterhalten", english: "to converse", spanish: "conversar", prep: "über + Akk", example: "Wir unterhalten uns über verschiedene Themen.", priority: 0},
+            {german: "berichten", english: "to report", spanish: "reportar", prep: "über + Akk", example: "Die Medien berichten täglich über Politik.", priority: 0},
+            {german: "insbesondere", english: "in particular", spanish: "en particular", prep: "", example: "Insbesondere junge Menschen sind betroffen.", priority: 0},
+            {german: "die Einleitung", english: "introduction", spanish: "introducción", prep: "", example: "Die Einleitung erklärt das Thema.", priority: 0},
+            {german: "vorbei", english: "over", spanish: "terminado", prep: "", example: "Die Zeit ist vorbei.", priority: 0},
+            {german: "eher", english: "rather", spanish: "más bien", prep: "", example: "Ich komme eher morgen als übermorgen.", priority: 0},
+            {german: "einsam", english: "lonely", spanish: "solitario", prep: "", example: "Viele alte Menschen fühlen sich einsam.", priority: 0},
+            {german: "ehrlich", english: "honest", spanish: "honesto", prep: "", example: "Man sollte immer ehrlich sein.", priority: 0},
+            {german: "die Vorliebe", english: "preference", spanish: "preferencia", prep: "für + Akk", example: "Jeder Mensch hat persönliche Vorlieben.", priority: 0},
+            {german: "die Abneigung", english: "aversion", spanish: "aversión", prep: "gegen + Akk", example: "Wir alle haben bestimmte Abneigungen.", priority: 0},
+            {german: "sich ausruhen", english: "to rest", spanish: "descansar", prep: "", example: "Nach der Arbeit sollte man sich ausruhen.", priority: 0},
+            {german: "besichtigen", english: "to visit", spanish: "visitar", prep: "", example: "Touristen besichtigen gerne die Sehenswürdigkeiten.", priority: 0},
+            {german: "ausschlafen", english: "to sleep in", spanish: "dormir hasta tarde", prep: "", example: "Am Wochenende möchte ich ausschlafen.", priority: 0},
+            {german: "führen", english: "to lead", spanish: "conducir", prep: "zu + Dat", example: "Gute Kommunikation kann zu Erfolg führen.", priority: 0},
+            {german: "sich überlegen", english: "to consider", spanish: "considerar", prep: "", example: "Man sollte sich die Entscheidung gut überlegen.", priority: 0},
+            {german: "bügeln", english: "to iron", spanish: "planchar", prep: "", example: "Ich muss noch die Hemden bügeln.", priority: 0},
+            {german: "sich erholen", english: "to recover", spanish: "recuperarse", prep: "", example: "Im Urlaub kann man sich gut erholen.", priority: 0},
+            {german: "abwaschen", english: "to wash up", spanish: "lavar", prep: "", example: "Nach dem Essen muss man das Geschirr abwaschen.", priority: 0},
+            {german: "ausgehen", english: "to go out", spanish: "salir", prep: "", example: "Am Abend möchten wir ausgehen.", priority: 0},
+            {german: "faulenzen", english: "to laze", spanish: "holgazanear", prep: "", example: "Am Sonntag will ich nur faulenzen.", priority: 0},
+            {german: "vorhaben", english: "to plan", spanish: "planear", prep: "", example: "Was haben Sie für nächste Woche vor?", priority: 0},
+            {german: "rechtzeitig", english: "on time", spanish: "a tiempo", prep: "", example: "Bitte kommen Sie rechtzeitig.", priority: 0},
+            {german: "der Schutz", english: "protection", spanish: "protección", prep: "", example: "Der Schutz der Umwelt ist wichtig.", priority: 0},
+            {german: "giftig", english: "toxic", spanish: "tóxico", prep: "", example: "Einige Chemikalien sind giftig.", priority: 0},
+            {german: "betreuen", english: "to care for", spanish: "cuidar", prep: "", example: "Sozialarbeiter betreuen benachteiligte Familien.", priority: 0},
+            {german: "überqueren", english: "to cross", spanish: "cruzar", prep: "", example: "Fußgänger sollten die Straße nur am Zebrastreifen überqueren.", priority: 0},
+            {german: "die Reihe", english: "row", spanish: "fila", prep: "", example: "Bitte stellen Sie sich in eine Reihe.", priority: 0},
+            {german: "sich bedanken", english: "to thank", spanish: "agradecer", prep: "bei + Dat", example: "Ich möchte mich für die Hilfe bedanken.", priority: 0},
+            {german: "erschrecken", english: "to frighten", spanish: "asustarse", prep: "", example: "Der laute Knall hat mich erschreckt.", priority: 0},
+            {german: "verhaften", english: "to arrest", spanish: "arrestar", prep: "", example: "Die Polizei konnte den Verdächtigen verhaften.", priority: 0},
+            {german: "erleichtert", english: "relieved", spanish: "aliviado", prep: "", example: "Ich bin erleichtert, dass alles gut ging.", priority: 0},
+            {german: "der Gegensatz", english: "contrast", spanish: "contraste", prep: "zu + Dat", example: "Der Gegensatz zwischen arm und reich wächst.", priority: 0},
+            {german: "eben", english: "exactly", spanish: "exactamente", prep: "", example: "Das ist eben das Problem.", priority: 0},
+            {german: "die Träne", english: "tear", spanish: "lágrima", prep: "", example: "Die Träne rollte über ihre Wange.", priority: 0},
+            {german: "retten", english: "to rescue", spanish: "rescatar", prep: "", example: "Die Feuerwehr konnte die Menschen retten.", priority: 0},
+            {german: "schweben", english: "to float", spanish: "flotar", prep: "", example: "Der Ballon schwebt in der Luft.", priority: 0},
+            {german: "vermutlich", english: "presumably", spanish: "presumiblemente", prep: "", example: "Vermutlich wird es morgen regnen.", priority: 0},
+            {german: "übertragen", english: "to transmit", spanish: "transmitir", prep: "", example: "Die Krankheit kann übertragen werden.", priority: 0},
+            {german: "sich auseinandersetzen", english: "to deal with", spanish: "ocuparse de", prep: "mit + Dat", example: "Man muss sich mit dem Thema auseinandersetzen.", priority: 0},
+            {german: "ansteigen", english: "to rise", spanish: "aumentar", prep: "", example: "Die Temperaturen steigen im Sommer an.", priority: 0},
+            {german: "vermitteln", english: "to convey", spanish: "transmitir", prep: "", example: "Lehrer vermitteln Wissen an Schüler.", priority: 0},
+            {german: "erarbeiten", english: "to work out", spanish: "elaborar", prep: "", example: "Gemeinsam können wir Lösungen erarbeiten.", priority: 0},
+            {german: "äußern", english: "to express", spanish: "expresar", prep: "", example: "Die Teilnehmer können ihre Meinung äußern.", priority: 0},
+            {german: "ermöglichen", english: "to enable", spanish: "posibilitar", prep: "", example: "Technologie kann neue Möglichkeiten ermöglichen.", priority: 0},
+            {german: "wahr", english: "true", spanish: "verdadero", prep: "", example: "Die Geschichte ist wahr.", priority: 0},
+            {german: "stattfinden", english: "to take place", spanish: "tener lugar", prep: "", example: "Die Konferenz wird morgen stattfinden.", priority: 0},
+            {german: "dicht", english: "dense", spanish: "denso", prep: "", example: "Der Nebel ist sehr dicht.", priority: 0},
+            {german: "die Leistung", english: "performance", spanish: "rendimiento", prep: "", example: "Die Leistung des Computers ist beeindruckend.", priority: 0},
+            {german: "erfüllen", english: "to fulfill", spanish: "cumplir", prep: "", example: "Die Bedingungen müssen erfüllt werden.", priority: 0},
+            {german: "ursprünglich", english: "original", spanish: "original", prep: "", example: "Der ursprüngliche Plan wurde geändert.", priority: 0},
+            {german: "die Verwendung", english: "use", spanish: "uso", prep: "", example: "Die Verwendung dieses Werkzeugs ist vielfältig.", priority: 0},
+            {german: "zunehmen", english: "to increase", spanish: "aumentar", prep: "", example: "Die Bevölkerung wird weiter zunehmen.", priority: 0},
+            {german: "der Wert", english: "value", spanish: "valor", prep: "", example: "Der Wert dieser Information ist hoch.", priority: 0},
+            {german: "häufig", english: "frequent", spanish: "frecuente", prep: "", example: "Dieses Problem tritt häufig auf.", priority: 0},
+            {german: "der Kern", english: "core", spanish: "núcleo", prep: "", example: "Der Kern des Arguments ist wichtig.", priority: 0},
+            {german: "der Wandel", english: "change", spanish: "cambio", prep: "", example: "Der gesellschaftliche Wandel ist unvermeidlich.", priority: 0},
+            {german: "umfassend", english: "comprehensive", spanish: "integral", prep: "", example: "Eine umfassende Lösung ist erforderlich.", priority: 0},
+            {german: "stabil", english: "stable", spanish: "estable", prep: "", example: "Das System muss stabil sein.", priority: 0},
+            {german: "sich anpassen", english: "to adapt", spanish: "adaptarse", prep: "an + Akk", example: "Ich muss mich an die neue Kultur anpassen.", priority: 0},
+            {german: "bezeichnend", english: "characteristic", spanish: "característico", prep: "für + Akk", example: "Das ist bezeichnend für seine Arbeitsweise.", priority: 0},
+            {german: "nämlich", english: "namely", spanish: "es decir", prep: "", example: "Er kommt nicht, er ist nämlich krank.", priority: 0},
+            {german: "abschließen", english: "to conclude", spanish: "concluir", prep: "", example: "Wir müssen das Projekt bald abschließen.", priority: 0},
+            {german: "sich anziehen", english: "to get dressed", spanish: "vestirse", prep: "", example: "Ich muss mich warm anziehen.", priority: 0},
+            {german: "auffallen", english: "to stand out", spanish: "destacar", prep: "", example: "Das neue Design wird sicher auffallen.", priority: 0},
+            {german: "aufgeben", english: "to give up", spanish: "rendirse", prep: "", example: "Man sollte nicht so schnell aufgeben.", priority: 0},
+            {german: "ausgeben", english: "to spend", spanish: "gastar", prep: "für + Akk", example: "Die Regierung gibt viel Geld für Bildung aus.", priority: 0},
+            {german: "aussehen", english: "to look", spanish: "parecer", prep: "", example: "Das sieht sehr interessant aus.", priority: 0},
+            {german: "aussteigen", english: "to get off", spanish: "bajarse", prep: "", example: "An der nächsten Station muss ich aussteigen.", priority: 0},
+            {german: "beraten", english: "to advise", spanish: "aconsejar", prep: "", example: "Experten beraten die Kunden.", priority: 0},
+            {german: "besitzen", english: "to own", spanish: "poseer", prep: "", example: "Er besitzt ein großes Vermögen.", priority: 0},
+            {german: "bestehen", english: "to consist", spanish: "consistir", prep: "aus + Dat", example: "Die Prüfung besteht aus drei Teilen.", priority: 0},
+            {german: "beweisen", english: "to prove", spanish: "probar", prep: "", example: "Man muss seine Qualifikation beweisen.", priority: 0},
+            {german: "bieten", english: "to offer", spanish: "ofrecer", prep: "", example: "Die Situation bietet viele Möglichkeiten.", priority: 0},
+            {german: "bitten", english: "to ask", spanish: "pedir", prep: "um + Akk", example: "Ich muss dich um einen Gefallen bitten.", priority: 0},
+            {german: "entstehen", english: "to arise", spanish: "surgir", prep: "", example: "Dadurch können Probleme entstehen.", priority: 0},
+            {german: "erfinden", english: "to invent", spanish: "inventar", prep: "", example: "Er hat das Telefon erfunden.", priority: 0},
+            {german: "fliehen", english: "to flee", spanish: "huir", prep: "vor + Dat", example: "Die Bewohner mussten vor dem Krieg fliehen.", priority: 0},
+            {german: "gelten", english: "to apply", spanish: "valer", prep: "für + Akk", example: "Diese Regel gilt für alle.", priority: 0},
+            {german: "genießen", english: "to enjoy", spanish: "disfrutar", prep: "", example: "Wir sollten die freie Zeit genießen.", priority: 0},
+            {german: "halten", english: "to hold", spanish: "sostener", prep: "von + Dat", example: "Was halten Sie von diesem Vorschlag?", priority: 0},
+            {german: "leihen", english: "to lend", spanish: "prestar", prep: "", example: "Kann ich mir dein Auto leihen?", priority: 0},
+            {german: "nennen", english: "to name", spanish: "nombrar", prep: "", example: "Man kann das Problem unterschiedlich nennen.", priority: 0},
+            {german: "scheinen", english: "to seem", spanish: "parecer", prep: "", example: "Die Sonne scheint heute hell.", priority: 0},
+            {german: "sterben", english: "to die", spanish: "morir", prep: "an + Dat", example: "Viele Menschen sterben an dieser Krankheit.", priority: 0},
+            {german: "sich treffen", english: "to meet", spanish: "encontrarse", prep: "", example: "Wir treffen uns morgen um 10 Uhr.", priority: 0},
+            {german: "unternehmen", english: "to undertake", spanish: "emprender", prep: "", example: "Die Firma wird ein neues Projekt unternehmen.", priority: 0},
+            {german: "sich unterscheiden", english: "to differ", spanish: "diferenciarse", prep: "", example: "Die Kulturen unterscheiden sich stark.", priority: 0},
+            {german: "verbringen", english: "to spend time", spanish: "pasar", prep: "", example: "Wir verbringen den Urlaub am Meer.", priority: 0},
+            {german: "verschieben", english: "to postpone", spanish: "posponer", prep: "", example: "Wir müssen das Treffen verschieben.", priority: 0},
+            {german: "versprechen", english: "to promise", spanish: "prometer", prep: "Dat", example: "Ich verspreche dir, pünktlich zu sein.", priority: 0},
+            {german: "sich vornehmen", english: "to intend", spanish: "proponerse", prep: "", example: "Ich nehme mir vor, mehr zu lernen.", priority: 0},
+            {german: "vorschlagen", english: "to suggest", spanish: "proponer", prep: "", example: "Darf ich etwas vorschlagen?", priority: 0},
+            {german: "wachsen", english: "to grow", spanish: "crecer", prep: "", example: "Die Pflanzen wachsen schnell.", priority: 0},
+            {german: "werben", english: "to advertise", spanish: "anunciar", prep: "für + Akk", example: "Die Firma wirbt für neue Produkte.", priority: 0},
+            {german: "widersprechen", english: "to contradict", spanish: "contradecir", prep: "Dat", example: "Ich muss dir widersprechen.", priority: 0},
+            {german: "zurechtkommen", english: "to cope", spanish: "arreglárselas", prep: "mit + Dat", example: "Ich komme in der neuen Stadt gut zurecht.", priority: 0},
+            {german: "achten", english: "to pay attention", spanish: "prestar atención", prep: "auf + Akk", example: "Man sollte auf die Umwelt achten.", priority: 0},
+            {german: "sich ärgern", english: "to get annoyed", spanish: "enfadarse", prep: "über + Akk", example: "Ich ärgere mich über den Lärm.", priority: 0},
+            {german: "sich beschweren", english: "to complain", spanish: "quejarse", prep: "über + Akk", example: "Kunden beschweren sich oft über die Preise.", priority: 0},
+            {german: "eingehen", english: "to address", spanish: "tratar", prep: "auf + Akk", example: "Wir sollten auf das Angebot eingehen.", priority: 0},
+            {german: "sich einsetzen", english: "to commit", spanish: "comprometerse", prep: "für + Akk", example: "Man sollte sich für die Umwelt einsetzen.", priority: 0},
+            {german: "sich engagieren", english: "to be involved", spanish: "comprometerse", prep: "", example: "Viele engagieren sich ehrenamtlich.", priority: 0},
+            {german: "sich gewöhnen", english: "to get used to", spanish: "acostumbrarse", prep: "an + Akk", example: "Man muss sich an das Klima gewöhnen.", priority: 0},
+            {german: "sich handeln", english: "to be about", spanish: "tratarse de", prep: "um + Akk", example: "Es handelt sich um ein wichtiges Thema.", priority: 0},
+            {german: "hinweisen", english: "to point out", spanish: "señalar", prep: "auf + Akk", example: "Ich möchte auf ein Problem hinweisen.", priority: 0},
+            {german: "kämpfen", english: "to fight", spanish: "luchar", prep: "für + Akk", example: "Aktivisten kämpfen für ihre Rechte.", priority: 0},
+            {german: "reagieren", english: "to react", spanish: "reaccionar", prep: "auf + Akk", example: "Wie reagierst du auf die Kritik?", priority: 0},
+            {german: "sich verlassen", english: "to rely on", spanish: "confiar en", prep: "auf + Akk", example: "Man kann sich auf seine Freunde verlassen.", priority: 0},
+            {german: "verzichten", english: "to give up", spanish: "renunciar", prep: "auf + Akk", example: "Ich muss auf Zucker verzichten.", priority: 0},
+            {german: "sich wenden", english: "to turn to", spanish: "dirigirse a", prep: "an + Akk", example: "Man sollte sich an einen Experten wenden.", priority: 0},
+            {german: "sich wundern", english: "to wonder", spanish: "sorprenderse", prep: "über + Akk", example: "Ich wundere mich über seine Reaktion.", priority: 0},
+            {german: "abhängen", english: "to depend on", spanish: "depender", prep: "von + Dat", example: "Das Ergebnis hängt von vielen Faktoren ab.", priority: 0},
+            {german: "abraten", english: "to advise against", spanish: "desaconsejar", prep: "von + Dat", example: "Ich muss dir von dieser Idee abraten.", priority: 0},
+            {german: "ändern", english: "to change", spanish: "cambiar", prep: "", example: "Wir müssen unsere Pläne ändern.", priority: 0},
+            {german: "sich austauschen", english: "to exchange", spanish: "intercambiar", prep: "über + Akk", example: "Experten tauschen sich regelmäßig aus.", priority: 0},
+            {german: "sich befassen", english: "to deal with", spanish: "ocuparse de", prep: "mit + Dat", example: "Wissenschaftler befassen sich mit diesem Thema.", priority: 0},
+            {german: "sich befinden", english: "to be located", spanish: "encontrarse", prep: "", example: "Das Gebäude befindet sich im Zentrum.", priority: 0},
+            {german: "beitragen", english: "to contribute", spanish: "contribuir", prep: "zu + Dat", example: "Das trägt zur Lösung bei.", priority: 0},
+            {german: "sich beteiligen", english: "to participate", spanish: "participar", prep: "an + Dat", example: "Alle können sich an der Diskussion beteiligen.", priority: 0},
+            {german: "sich entschließen", english: "to decide", spanish: "decidirse", prep: "zu + Dat", example: "Ich habe mich entschlossen, zu kündigen.", priority: 0},
+            {german: "erkennen", english: "to recognize", spanish: "reconocer", prep: "", example: "Man kann das Problem schnell erkennen.", priority: 0},
+            {german: "sich erkundigen", english: "to inquire", spanish: "informarse", prep: "nach + Dat", example: "Ich möchte mich nach dem Weg erkundigen.", priority: 0},
+            {german: "erziehen", english: "to raise", spanish: "educar", prep: "", example: "Eltern erziehen ihre Kinder.", priority: 0},
+            {german: "gehören", english: "to belong", spanish: "pertenecer", prep: "Dat", example: "Das Buch gehört mir.", priority: 0},
+            {german: "klarkommen", english: "to cope", spanish: "arreglárselas", prep: "mit + Dat", example: "Ich komme mit der Situation gut klar.", priority: 0},
+            {german: "leiden", english: "to suffer", spanish: "sufrir", prep: "an + Dat", example: "Viele Menschen leiden an dieser Krankheit.", priority: 0},
+            {german: "nachfragen", english: "to ask", spanish: "preguntar", prep: "", example: "Bei Unklarheiten sollte man nachfragen.", priority: 0},
+            {german: "träumen", english: "to dream", spanish: "soñar", prep: "von + Dat", example: "Ich träume von einer besseren Welt.", priority: 0},
+            {german: "überzeugen", english: "to convince", spanish: "convencer", prep: "", example: "Gute Argumente können überzeugen.", priority: 0},
+            {german: "umgehen", english: "to handle", spanish: "manejar", prep: "mit + Dat", example: "Man sollte vorsichtig mit Chemikalien umgehen.", priority: 0},
+            {german: "unterstützen", english: "to support", spanish: "apoyar", prep: "", example: "Familie und Freunde unterstützen ihn.", priority: 0},
+            {german: "sich verabschieden", english: "to say goodbye", spanish: "despedirse", prep: "", example: "Ich muss mich jetzt verabschieden.", priority: 0},
+            {german: "plötzlich", english: "suddenly", spanish: "de repente", prep: "", example: "Plötzlich fing es an zu regnen.", priority: 0},
+            {german: "beeinflussen", english: "to influence", spanish: "influir", prep: "", example: "Viele Faktoren beeinflussen die Entscheidung.", priority: 0},
+            {german: "beruhen", english: "to be based on", spanish: "basarse en", prep: "auf + Dat", example: "Die Theorie beruht auf wissenschaftlichen Erkenntnissen.", priority: 0},
+            {german: "sich konzentrieren", english: "to concentrate", spanish: "concentrarse", prep: "auf + Akk", example: "Ich muss mich auf die Prüfung konzentrieren.", priority: 0},
+            {german: "eintauchen", english: "to immerse", spanish: "sumergir", prep: "in + Akk", example: "Ich will mich im Sommer im Wasser eintauchen.", priority: 0},
+            {german: "sich Sorgen machen", english: "to worry", spanish: "preocuparse", prep: "um + Akk", example: "Ich mache mir Sorgen um die Gesundheit meiner Eltern.", priority: 0}
+        ];
+
+        // PREPOSITION LOOKUP TABLE - Built from your vocabulary
+        const prepositionLookup = {
+            "zugreifen": "auf + Akk",
+            "forschen": "an + Dat",
+            "verzweifeln": "an + Dat",
+            "leiden": "an + Dat",
+            "sterben": "an + Dat",
+            "sich beteiligen": "an + Dat",
+            "hinweisen": "auf + Akk",
+            "achten": "auf + Akk",
+            "verzichten": "auf + Akk",
+            "reagieren": "auf + Akk",
+            "eingehen": "auf + Akk",
+            "sich verlassen": "auf + Akk",
+            "sich konzentrieren": "auf + Akk",
+            "beruhen": "auf + Dat",
+            "entnehmen": "aus + Dat",
+            "bestehen": "aus + Dat",
+            "sich bedanken": "bei + Dat",
+            "für": "für + Akk",
+            "kämpfen": "für + Akk",
+            "werben": "für + Akk",
+            "sich einsetzen": "für + Akk",
+            "gelten": "für + Akk",
+            "ausgeben": "für + Akk",
+            "bezeichnend": "für + Akk",
+            "die Vorliebe": "für + Akk",
+            "mit": "mit + Dat",
+            "vereinbar": "mit + Dat",
+            "sich auseinandersetzen": "mit + Dat",
+            "sich befassen": "mit + Dat",
+            "umgehen": "mit + Dat",
+            "klarkommen": "mit + Dat",
+            "zurechtkommen": "mit + Dat",
+            "sich ärgern": "über + Akk",
+            "berichten": "über + Akk",
+            "sich unterhalten": "über + Akk",
+            "sich beschweren": "über + Akk",
+            "sich austauschen": "über + Akk",
+            "sich wundern": "über + Akk",
+            "bitten": "um + Akk",
+            "sich handeln": "um + Akk",
+            "sich Sorgen machen": "um + Akk",
+            "abhängen": "von + Dat",
+            "abraten": "von + Dat",
+            "halten": "von + Dat",
+            "träumen": "von + Dat",
+            "fliehen": "vor + Dat",
+            "beitragen": "zu + Dat",
+            "führen": "zu + Dat",
+            "bewegen": "zu + Dat",
+            "zwingen": "zu + Dat",
+            "sich entschließen": "zu + Dat",
+            "der Gegensatz": "zu + Dat",
+            "empfinden": "als + Akk",
+            "sich gewöhnen": "an + Akk",
+            "sich wenden": "an + Akk",
+            "sich anpassen": "an + Akk",
+            "die Abneigung": "gegen + Akk",
+            "sich erkundigen": "nach + Dat",
+            "sich verlassen": "auf + Akk",
+            "eintauchen": "in + Akk"
+        };
+
+        //===========================================
+        // STATE MANAGEMENT
+        //===========================================
+        let vocabulary = [];
+        let practiceData = {
+            sessions: [], // Array of {word_id, date, confidence, grammar_score, mode}
+            stats: {
+                totalPracticed: 0,
+                uniqueWords: new Set(),
+                currentStreak: 0,
+                lastPracticeDate: null
+            }
+        };
+        let currentPracticeMode = null;
+        let currentWords = [];
+        let currentWordIndex = 0;
+        let currentConfidence = 0;
+        let translationsVisible = false;
+
+        //===========================================
+        // INITIALIZATION
+        //===========================================
+        function init() {
+            const saved = localStorage.getItem('deutschVocabulary');
+            vocabulary = saved ? JSON.parse(saved) : [...initialVocab];
+            
+            const savedPractice = localStorage.getItem('deutschPracticeV2');
+            if (savedPractice) {
+                const parsed = JSON.parse(savedPractice);
+                practiceData = {
+                    ...parsed,
+                    stats: {
+                        ...parsed.stats,
+                        uniqueWords: new Set(parsed.stats.uniqueWords || [])
+                    }
+                };
+            }
+
+            updateDateDisplay();
+            updateStats();
+            checkStreak();
+        }
+
+        function updateDateDisplay() {
+            const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+            const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+            const now = new Date();
+            document.getElementById('dateDisplay').textContent = `${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]}`;
+        }
+
+        function updateStats() {
+            document.getElementById('totalWords').textContent = vocabulary.length;
+            document.getElementById('practiceCount').textContent = practiceData.stats.totalPracticed;
+            document.getElementById('priorityCount').textContent = vocabulary.filter(w => w.priority > 0).length;
+            document.getElementById('streakDays').textContent = practiceData.stats.currentStreak;
+            
+            const uniqueCount = practiceData.stats.uniqueWords.size;
+            const total = vocabulary.length;
+            const percent = total > 0 ? Math.round((uniqueCount / total) * 100) : 0;
+            
+            document.getElementById('progressPercent').textContent = percent + '%';
+            
+            const circle = document.getElementById('progressCircle');
+            const circumference = 2 * Math.PI * 60;
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function checkStreak() {
+            const today = new Date().toDateString();
+            const lastPractice = practiceData.stats.lastPracticeDate;
+            
+            if (!lastPractice) {
+                practiceData.stats.currentStreak = 0;
+            } else {
+                const last = new Date(lastPractice);
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (last.toDateString() !== today && last.toDateString() !== yesterday.toDateString()) {
+                    practiceData.stats.currentStreak = 0;
+                }
+            }
+            
+            savePracticeData();
+        }
+
+        function savePracticeData() {
+            const toSave = {
+                ...practiceData,
+                stats: {
+                    ...practiceData.stats,
+                    uniqueWords: Array.from(practiceData.stats.uniqueWords)
+                }
+            };
+            localStorage.setItem('deutschPracticeV2', JSON.stringify(toSave));
+        }
+
+        function saveVocabulary() {
+            localStorage.setItem('deutschVocabulary', JSON.stringify(vocabulary));
+        }
+
+        //===========================================
+        // PRACTICE MODES
+        //===========================================
+        function startPractice(mode) {
+            currentPracticeMode = mode;
+            currentWordIndex = 0;
+            translationsVisible = false;
+            
+            // Get words - priority words appear 2x more
+            let pool = [];
+            vocabulary.forEach(word => {
+                pool.push(word);
+                if (word.priority > 0) {
+                    pool.push(word); // Add twice for priority
+                }
+            });
+            
+            const shuffled = pool.sort(() => Math.random() - 0.5);
+            currentWords = shuffled.slice(0, 5);
+            
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('practiceScreen').style.display = 'block';
+            document.getElementById('practiceScreen').classList.add('active');
+            
+            displayCurrentWord();
+        }
+
+        function displayCurrentWord() {
+            const word = currentWords[currentWordIndex];
+            const content = document.getElementById('practiceContent');
+            const buttonsDiv = document.getElementById('practiceButtons');
+            
+            document.getElementById('currentWord').textContent = currentWordIndex + 1;
+            document.getElementById('totalWordsInPractice').textContent = currentWords.length;
+            
+            currentConfidence = 0;
+            
+            // DAILY PRACTICE MODE
+            if (currentPracticeMode === 'daily') {
+                content.innerHTML = `
+                    <div class="word-card">
+                        <div class="priority-star ${word.priority > 0 ? 'active' : ''}" onclick="togglePriority(${currentWordIndex})">
+                            ${word.priority > 0 ? '⭐' : '☆'}
+                            <div class="priority-tooltip">
+                                ${word.priority > 0 ? 'Hohe Priorität - erscheint öfter!' : 'Klicken für hohe Priorität'}
+                            </div>
+                        </div>
+                        
+                        <div class="word-content">
+                            <div class="word-header">
+                                <h2 class="word-german">${word.german}</h2>
+                                <button class="toggle-translation-btn" onclick="toggleTranslation()">
+                                    👁️ ${translationsVisible ? 'Übersetzung verstecken' : 'Übersetzung zeigen'}
+                                </button>
+                                <div class="word-translations ${translationsVisible ? '' : 'hidden'}">
+                                    <div class="translation-item">
+                                        <span class="translation-label">EN:</span> ${word.english}
+                                    </div>
+                                    <div class="translation-item">
+                                        <span class="translation-label">ES:</span> ${word.spanish}
+                                    </div>
+                                </div>
+                                ${word.prep ? `<span class="word-preposition">${word.prep}</span>` : ''}
+                            </div>
+                            
+                            <div class="word-example ${translationsVisible ? '' : 'hidden'}">${word.example}</div>
+                            
+                            <textarea 
+                                class="sentence-input" 
+                                id="sentenceInput"
+                                placeholder="Schreibe hier deinen eigenen Satz über dein Leben, ESN, Braunschweig, dein Studium..."
+                            ></textarea>
+                            
+                            <div class="grammar-section">
+                                <button class="grammar-button" onclick="checkGrammar()" id="grammarBtn">
+                                    ✓ Grammatik checken
+                                </button>
+                                <div class="grammar-result" id="grammarResult"></div>
+                            </div>
+                            
+                            <div class="confidence-section">
+                                <div class="confidence-label">Wie sicher fühlst du dich mit diesem Wort?</div>
+                                <div class="confidence-dots">
+                                    ${[1,2,3,4,5].map(level => `
+                                        <div class="confidence-dot ${currentConfidence >= level ? 'active' : ''}" 
+                                             onclick="setConfidence(${level})">${level}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                buttonsDiv.innerHTML = `
+                    <button class="primary-action-btn" onclick="saveAndNext()">✓ Speichern & Weiter</button>
+                    <button class="secondary-btn" onclick="skipWord()">Überspringen</button>
+                `;
+            }
+            
+            // TRANSLATION TEST MODE
+            else if (currentPracticeMode === 'translation') {
+                content.innerHTML = `
+                    <div class="word-card">
+                        <div class="word-content">
+                            <div class="word-header">
+                                <h2 class="word-german">${word.german}</h2>
+                                <p style="color: var(--text-light); margin: 1rem 0; font-size: 1.05rem;">
+                                    📝 Übersetze dieses deutsche Wort ins <strong>Englische</strong> und <strong>Spanische</strong>!
+                                </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Englisch:</label>
+                                <input type="text" class="test-input" id="testEnglish" placeholder="Deine Übersetzung...">
+                                <div class="test-result" id="resultEnglish"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Español:</label>
+                                <input type="text" class="test-input" id="testSpanish" placeholder="Tu traducción...">
+                                <div class="test-result" id="resultSpanish"></div>
+                            </div>
+                            
+                            ${word.prep ? `
+                            <div class="form-group">
+                                <label>Präposition:</label>
+                                <input type="text" class="test-input" id="testPrep" placeholder="z.B. mit + Dat">
+                                <div class="test-result" id="resultPrep"></div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                buttonsDiv.innerHTML = `
+                    <button class="primary-action-btn" onclick="checkTranslations()">✓ Antworten prüfen</button>
+                    <button class="secondary-btn" onclick="nextWord()">Weiter</button>
+                `;
+            }
+            
+            // FILL IN THE BLANK MODE
+            else if (currentPracticeMode === 'fillblank') {
+                const blankSentence = word.example.replace(new RegExp(word.german.replace(/sich /, ''), 'gi'), '_____');
+                
+                content.innerHTML = `
+                    <div class="word-card">
+                        <div class="word-content">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.5rem; color: var(--primary); font-family: 'Fraunces', serif;">Fülle die Lücke aus 📝</h3>
+                            <p style="margin-bottom: 1.5rem; color: var(--text-light); font-size: 1.05rem;">
+                                Ein Wort fehlt im Satz unten. Schreibe das fehlende deutsche Wort in das Feld!
+                            </p>
+                            <div class="word-example" style="display: block; font-size: 1.3rem; font-style: normal; background: var(--accent-pink); padding: 1.5rem; border-radius: 20px; color: var(--primary);">
+                                ${blankSentence}
+                            </div>
+                            
+                            <div class="form-group" style="margin-top: 2rem;">
+                                <label style="font-weight: 600; font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; display: block;">Deine Antwort:</label>
+                                <input type="text" class="test-input" id="testBlank" placeholder="Tippe das fehlende Wort hier..." style="font-size: 1.1rem;">
+                                <div class="test-result" id="resultBlank"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                buttonsDiv.innerHTML = `
+                    <button class="primary-action-btn" onclick="checkBlank()">✓ Antwort prüfen</button>
+                    <button class="secondary-btn" onclick="nextWord()">Weiter</button>
+                `;
+            }
+        }
+
+        function toggleTranslation() {
+            translationsVisible = !translationsVisible;
+            
+            // Save current sentence before redisplaying
+            const currentSentence = document.getElementById('sentenceInput')?.value || '';
+            
+            displayCurrentWord();
+            
+            // Restore sentence after redisplay
+            const sentenceInput = document.getElementById('sentenceInput');
+            if (sentenceInput) {
+                sentenceInput.value = currentSentence;
+            }
+        }
+
+        function setConfidence(level) {
+            currentConfidence = level;
+            document.querySelectorAll('.confidence-dot').forEach((dot, idx) => {
+                if (idx < level) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function togglePriority(index) {
+            const word = currentWords[index];
+            word.priority = word.priority > 0 ? 0 : 1;
+            
+            const vocabIndex = vocabulary.findIndex(w => w.german === word.german);
+            if (vocabIndex >= 0) {
+                vocabulary[vocabIndex].priority = word.priority;
+                saveVocabulary();
+            }
+            
+            displayCurrentWord();
+            updateStats();
+        }
+
+        //===========================================
+        // GRAMMAR CHECK (LanguageTool API)
+        //===========================================
+        async function checkGrammar() {
+            const sentence = document.getElementById('sentenceInput').value.trim();
+            const btn = document.getElementById('grammarBtn');
+            const result = document.getElementById('grammarResult');
+            
+            if (!sentence) {
+                alert('Bitte schreibe erst einen Satz!');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Überprüfe...';
+            
+            try {
+                const response = await fetch('https://api.languagetoolplus.com/v2/check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'text': sentence,
+                        'language': 'de-DE'
+                    })
+                });
+                
+                const data = await response.json();
+                const matches = data.matches || [];
+                
+                // Calculate score (5 = perfect, 1 = many errors)
+                let score = 5;
+                if (matches.length > 0) score = 4;
+                if (matches.length > 2) score = 3;
+                if (matches.length > 4) score = 2;
+                if (matches.length > 6) score = 1;
+                
+                let html = `<div class="grammar-score">Grammatik-Score: ${score}/5 ${getScoreEmoji(score)}</div>`;
+                
+                if (matches.length > 0) {
+                    html += '<div class="grammar-errors">';
+                    matches.slice(0, 5).forEach(match => {
+                        html += `
+                            <div class="grammar-error-item">
+                                <div class="error-message">⚠️ ${match.message}</div>
+                                ${match.replacements && match.replacements.length > 0 ? 
+                                    `<div class="error-suggestion">💡 Vorschlag: ${match.replacements[0].value}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                } else {
+                    html += '<p style="color: var(--cascade); margin-top: 0.5rem;">✨ Perfekt! Keine Fehler gefunden!</p>';
+                }
+                
+                result.innerHTML = html;
+                result.classList.add('show');
+                
+                // Store grammar score for this practice session
+                window.currentGrammarScore = score;
+                
+            } catch (error) {
+                result.innerHTML = '<p style="color: var(--accent-coral);">⚠️ Grammatik-Check nicht verfügbar. Kein Internet?</p>';
+                result.classList.add('show');
+                window.currentGrammarScore = null;
+            }
+            
+            btn.disabled = false;
+            btn.textContent = '✓ Grammatik checken';
+        }
+
+        function getScoreEmoji(score) {
+            const emojis = ['😞', '😕', '😐', '😊', '🌟'];
+            return emojis[score - 1] || '😐';
+        }
+
+        //===========================================
+        // TRANSLATION TEST MODE FUNCTIONS
+        //===========================================
+        function checkTranslations() {
+            const word = currentWords[currentWordIndex];
+            const userEn = document.getElementById('testEnglish').value.trim().toLowerCase();
+            const userEs = document.getElementById('testSpanish').value.trim().toLowerCase();
+            const userPrep = document.getElementById('testPrep')?.value.trim().toLowerCase();
+            
+            const correctEn = word.english.toLowerCase();
+            const correctEs = word.spanish.toLowerCase();
+            const correctPrep = word.prep ? word.prep.toLowerCase() : null;
+            
+            // More lenient checking - check if answer contains key word or key word contains answer
+            const enCorrect = userEn === correctEn || 
+                             correctEn.includes(userEn) || 
+                             userEn.includes(correctEn.split(',')[0].trim()) ||
+                             correctEn.split(',')[0].trim().includes(userEn);
+            
+            const esCorrect = userEs === correctEs || 
+                             correctEs.includes(userEs) || 
+                             userEs.includes(correctEs.split(',')[0].trim()) ||
+                             correctEs.split(',')[0].trim().includes(userEs);
+            
+            const prepCorrect = !correctPrep || 
+                               userPrep === correctPrep || 
+                               correctPrep.includes(userPrep);
+            
+            document.getElementById('resultEnglish').className = `test-result ${enCorrect ? 'correct' : 'incorrect'}`;
+            document.getElementById('resultEnglish').innerHTML = enCorrect ? 
+                `✓ Richtig!` : 
+                `✗ Falsch. Richtig: <span class="test-answer">${word.english}</span>`;
+            
+            document.getElementById('resultSpanish').className = `test-result ${esCorrect ? 'correct' : 'incorrect'}`;
+            document.getElementById('resultSpanish').innerHTML = esCorrect ? 
+                `✓ Richtig!` : 
+                `✗ Falsch. Richtig: <span class="test-answer">${word.spanish}</span>`;
+            
+            if (correctPrep) {
+                document.getElementById('resultPrep').className = `test-result ${prepCorrect ? 'correct' : 'incorrect'}`;
+                document.getElementById('resultPrep').innerHTML = prepCorrect ? 
+                    `✓ Richtig!` : 
+                    `✗ Falsch. Richtig: <span class="test-answer">${word.prep}</span>`;
+            }
+            
+            const allCorrect = enCorrect && esCorrect && (!correctPrep || prepCorrect);
+            savePracticeSession(word, allCorrect ? 5 : 3, null);
+        }
+
+        //===========================================
+        // FILL IN THE BLANK MODE FUNCTIONS
+        //===========================================
+        function checkBlank() {
+            const word = currentWords[currentWordIndex];
+            const userAnswer = document.getElementById('testBlank').value.trim().toLowerCase();
+            const correctAnswer = word.german.toLowerCase().replace('sich ', '');
+            
+            const isCorrect = userAnswer === correctAnswer || userAnswer === word.german.toLowerCase();
+            
+            document.getElementById('resultBlank').className = `test-result ${isCorrect ? 'correct' : 'incorrect'}`;
+            document.getElementById('resultBlank').innerHTML = isCorrect ? 
+                `✓ Perfekt! Das ist richtig!` : 
+                `✗ Fast! Die richtige Antwort ist: <span class="test-answer">${word.german}</span>`;
+            
+            savePracticeSession(word, isCorrect ? 5 : 3, null);
+        }
+
+        //===========================================
+        // SAVE & NAVIGATION
+        //===========================================
+        function saveAndNext() {
+            const word = currentWords[currentWordIndex];
+            const sentence = document.getElementById('sentenceInput')?.value.trim();
+            
+            if (!sentence) {
+                alert('Bitte schreibe erst einen Satz!');
+                return;
+            }
+            
+            if (currentConfidence === 0) {
+                alert('Bitte bewerte dein Vertrauen (1-5)!');
+                return;
+            }
+            
+            const grammarScore = window.currentGrammarScore || null;
+            
+            savePracticeSession(word, currentConfidence, grammarScore);
+            
+            nextWord();
+        }
+
+        function savePracticeSession(word, confidence, grammarScore) {
+            const session = {
+                word_id: word.german,
+                date: new Date().toISOString(),
+                confidence: confidence,
+                grammar_score: grammarScore,
+                mode: currentPracticeMode
+            };
+            
+            practiceData.sessions.push(session);
+            practiceData.stats.totalPracticed++;
+            practiceData.stats.uniqueWords.add(word.german);
+            
+            const today = new Date().toDateString();
+            if (practiceData.stats.lastPracticeDate !== today) {
+                practiceData.stats.currentStreak++;
+                practiceData.stats.lastPracticeDate = today;
+            }
+            
+            savePracticeData();
+            updateStats();
+        }
+
+        function nextWord() {
+            if (currentWordIndex < currentWords.length - 1) {
+                currentWordIndex++;
+                currentConfidence = 0;
+                translationsVisible = false;
+                window.currentGrammarScore = null;
+                displayCurrentWord();
+            } else {
+                alert('🎉 Super! Du hast alle Wörter geübt!');
+                backToHome();
+            }
+        }
+
+        function skipWord() {
+            nextWord();
+        }
+
+        function backToHome() {
+            document.getElementById('homeScreen').style.display = 'block';
+            document.getElementById('practiceScreen').style.display = 'none';
+            document.getElementById('practiceScreen').classList.remove('active');
+            updateStats();
+        }
+
+        //===========================================
+        // ADD WORD WITH API
+        //===========================================
+        async function fetchWordData() {
+            const germanWord = document.getElementById('newWordGerman').value.trim();
+            
+            if (!germanWord) {
+                alert('Bitte gib ein deutsches Wort ein!');
+                return;
+            }
+            
+            document.getElementById('newWordEnglish').value = 'Suche...';
+            document.getElementById('newWordSpanish').value = 'Suche...';
+            document.getElementById('newWordPrep').value = 'Suche...';
+            document.getElementById('newWordExample').value = 'Suche...';
+            
+            try {
+                // Try DeepL API first (free tier)
+                // Note: For production, you'd need a DeepL API key
+                // Using MyMemory as fallback (completely free, no key needed)
+                
+                const baseWord = germanWord.replace('sich ', '');
+                
+                // English translation
+                const responseEN = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(germanWord)}&langpair=de|en`);
+                const dataEN = await responseEN.json();
+                
+                if (dataEN.responseData && dataEN.responseData.translatedText) {
+                    document.getElementById('newWordEnglish').value = dataEN.responseData.translatedText;
+                    document.getElementById('newWordEnglish').removeAttribute('readonly');
+                }
+                
+                // Spanish translation
+                const responseES = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(germanWord)}&langpair=de|es`);
+                const dataES = await responseES.json();
+                
+                if (dataES.responseData && dataES.responseData.translatedText) {
+                    document.getElementById('newWordSpanish').value = dataES.responseData.translatedText;
+                    document.getElementById('newWordSpanish').removeAttribute('readonly');
+                }
+                
+                // Check for preposition in lookup table
+                const prep = prepositionLookup[baseWord] || prepositionLookup[germanWord] || '';
+                document.getElementById('newWordPrep').value = prep;
+                document.getElementById('newWordPrep').removeAttribute('readonly');
+                
+                // Generate example
+                document.getElementById('newWordExample').value = `Beispiel: ${germanWord} wird oft verwendet.`;
+                document.getElementById('newWordExample').removeAttribute('readonly');
+                
+                // Check if reflexive verb
+                if (!germanWord.startsWith('sich ') && isLikelyReflexive(baseWord)) {
+                    if (confirm(`Ist "${germanWord}" ein reflexives Verb? Soll ich "sich" hinzufügen?`)) {
+                        document.getElementById('newWordGerman').value = `sich ${baseWord}`;
+                    }
+                }
+                
+                alert('✓ Übersetzungen gefunden! Du kannst sie jetzt bearbeiten.');
+                
+            } catch (error) {
+                alert('⚠️ API-Fehler. Bitte fülle die Felder manuell aus.');
+                document.getElementById('newWordEnglish').value = '';
+                document.getElementById('newWordEnglish').removeAttribute('readonly');
+                document.getElementById('newWordSpanish').value = '';
+                document.getElementById('newWordSpanish').removeAttribute('readonly');
+                document.getElementById('newWordPrep').value = '';
+                document.getElementById('newWordPrep').removeAttribute('readonly');
+                document.getElementById('newWordExample').value = '';
+                document.getElementById('newWordExample').removeAttribute('readonly');
+            }
+        }
+
+        function isLikelyReflexive(word) {
+            const reflexivePatterns = ['auseinander', 'an', 'auf', 'aus', 'bei', 'ein', 'vor', 'über', 'um'];
+            return reflexivePatterns.some(pattern => word.includes(pattern)) && 
+                   (word.endsWith('setzen') || word.endsWith('ziehen') || word.endsWith('stellen'));
+        }
+
+        function addNewWord() {
+            const german = document.getElementById('newWordGerman').value.trim();
+            const english = document.getElementById('newWordEnglish').value.trim();
+            const spanish = document.getElementById('newWordSpanish').value.trim();
+            const prep = document.getElementById('newWordPrep').value.trim();
+            const example = document.getElementById('newWordExample').value.trim();
+            
+            if (!german || !english || !spanish || !example) {
+                alert('Bitte fülle alle Felder aus!');
+                return;
+            }
+            
+            const exists = vocabulary.find(w => w.german.toLowerCase() === german.toLowerCase());
+            if (exists) {
+                alert('⚠️ Dieses Wort existiert bereits!');
+                return;
+            }
+            
+            const newWord = {
+                german,
+                english,
+                spanish,
+                prep,
+                example,
+                priority: 0
+            };
+            
+            vocabulary.push(newWord);
+            saveVocabulary();
+            
+            document.getElementById('newWordGerman').value = '';
+            document.getElementById('newWordEnglish').value = '';
+            document.getElementById('newWordSpanish').value = '';
+            document.getElementById('newWordPrep').value = '';
+            document.getElementById('newWordExample').value = '';
+            
+            document.getElementById('newWordEnglish').setAttribute('readonly', 'readonly');
+            document.getElementById('newWordSpanish').setAttribute('readonly', 'readonly');
+            document.getElementById('newWordPrep').setAttribute('readonly', 'readonly');
+            document.getElementById('newWordExample').setAttribute('readonly', 'readonly');
+            
+            const msg = document.getElementById('successMessage');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+            
+            updateStats();
+        }
+
+        //===========================================
+        // VOCABULARY LIST
+        //===========================================
+        function viewAllVocab() {
+            const list = document.getElementById('vocabList');
+            list.innerHTML = vocabulary.map(word => `
+                <div class="vocab-item">
+                    <div class="vocab-item-word">${word.german} ${word.priority > 0 ? '⭐' : ''}</div>
+                    <div class="vocab-item-trans">
+                        EN: ${word.english} | ES: ${word.spanish}
+                        ${word.prep ? ` | ${word.prep}` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('vocabModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('vocabModal').classList.remove('active');
+        }
+
+        function filterVocab() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = vocabulary.filter(word => 
+                word.german.toLowerCase().includes(search) ||
+                word.english.toLowerCase().includes(search) ||
+                word.spanish.toLowerCase().includes(search)
+            );
+
+            const list = document.getElementById('vocabList');
+            list.innerHTML = filtered.map(word => `
+                <div class="vocab-item">
+                    <div class="vocab-item-word">${word.german} ${word.priority > 0 ? '⭐' : ''}</div>
+                    <div class="vocab-item-trans">
+                        EN: ${word.english} | ES: ${word.spanish}
+                        ${word.prep ? ` | ${word.prep}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        //===========================================
+        // EXPORT DATA
+        //===========================================
+        function exportData() {
+            let exportText = "=== DEUTSCH AKTIV - LERNFORTSCHRITT ===\n\n";
+            exportText += `Gesamt geübt: ${practiceData.stats.totalPracticed} mal\n`;
+            exportText += `Einzigartige Wörter: ${practiceData.stats.uniqueWords.size}\n`;
+            exportText += `Streak: ${practiceData.stats.currentStreak} Tage\n\n`;
+            exportText += "=== LETZTE ÜBUNGEN ===\n\n";
+            
+            practiceData.sessions.slice(-50).forEach(session => {
+                const date = new Date(session.date).toLocaleDateString('de-DE');
+                exportText += `${date} - ${session.word_id}\n`;
+                exportText += `  Vertrauen: ${session.confidence}/5\n`;
+                if (session.grammar_score) {
+                    exportText += `  Grammatik: ${session.grammar_score}/5\n`;
+                }
+                exportText += `  Modus: ${session.mode}\n\n`;
+            });
+            
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `deutsch-aktiv-${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✓ Daten exportiert!');
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
