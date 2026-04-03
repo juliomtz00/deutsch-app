@@ -53,7 +53,7 @@ export default function DailyPracticePage() {
         .from('user_stats')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .single() as { data: any }
 
       // Get priority words count
       const { count: priorityCount } = await supabase
@@ -71,8 +71,8 @@ export default function DailyPracticePage() {
         totalWords: vocabCount || 0,
         practiceCount: practiceCount || 0,
         priorityCount: priorityCount || 0,
-        currentStreak: userStats?.current_streak || 0,
-        uniqueWords: userStats?.unique_words_count || 0
+        currentStreak: (userStats && userStats.current_streak) || 0,
+        uniqueWords: (userStats && userStats.unique_words_count) || 0
       });
     } catch (error) {
       console.error('Error loading stats:', error);
