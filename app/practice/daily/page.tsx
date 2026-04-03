@@ -1,9 +1,11 @@
 import { createServerClient } from '../../../lib/supabase'
 import { redirect } from 'next/navigation'
 import PracticeSession from '../../../components/PracticeSession'
+import { cookies } from 'next/headers'
 
 export default async function DailyPracticePage() {
-  const supabase = createServerClient()
+  const cookieStore = cookies()
+  const supabase = createServerClient(cookieStore)
   
   const { data: { session } } = await supabase.auth.getSession()
   
