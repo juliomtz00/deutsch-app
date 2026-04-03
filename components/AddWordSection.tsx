@@ -139,7 +139,7 @@ export default function AddWordSection({ userId }: AddWordSectionProps) {
           example,
           priority: 0,
           added_by_user_id: userId
-        })
+        } as any)
 
       if (error) throw error
 
