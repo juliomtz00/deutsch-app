@@ -3,6 +3,16 @@ import { redirect } from 'next/navigation'
 import PracticeSession from '../../../components/PracticeSession'
 import { cookies } from 'next/headers'
 
+interface VocabWord {
+  id: string
+  german: string
+  english: string
+  spanish: string
+  preposition: string | null
+  example: string
+  priority: number
+}
+
 export default async function DailyPracticePage() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
@@ -17,18 +27,18 @@ export default async function DailyPracticePage() {
   const { data: allVocab } = await supabase
     .from('vocabulary')
     .select('*')
-    .order('priority', { ascending: false })
+    .order('priority', { ascending: false }) as { data: VocabWord[] | null }
 
   if (!allVocab || allVocab.length === 0) {
     return <div>No vocabulary found</div>
   }
 
   // Weight priority words (add them twice to pool)
-  const pool: any[] = []
+  const pool: VocabWord[] = []
   allVocab.forEach(word => {
     pool.push(word)
     if (word.priority > 0) {
-      pool.push(word) // Add priority words twice
+      pool.push(word)
     }
   })
 
