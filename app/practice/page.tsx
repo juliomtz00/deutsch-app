@@ -20,8 +20,10 @@ export default function DailyPracticePage() {
     totalWords: 0,
     practiceCount: 0,
     priorityCount: 0,
-    currentStreak: 0,
-    uniqueWords: 0
+    total_practiced: 0,
+    unique_words_count: 0,
+    current_streak: 0,
+    longest_streak: 0
   });
 
   useEffect(() => {
@@ -71,8 +73,10 @@ export default function DailyPracticePage() {
         totalWords: vocabCount || 0,
         practiceCount: practiceCount || 0,
         priorityCount: priorityCount || 0,
-        currentStreak: (userStats && userStats.current_streak) || 0,
-        uniqueWords: (userStats && userStats.unique_words_count) || 0
+        total_practiced: (userStats as any)?.total_practiced ?? 0,
+        unique_words_count: (userStats as any)?.unique_words_count ?? 0,
+        current_streak: (userStats as any)?.current_streak ?? 0,
+        longest_streak: (userStats as any)?.longest_streak ?? 0
       });
     } catch (error) {
       console.error('Error loading stats:', error);
