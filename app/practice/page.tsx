@@ -135,13 +135,21 @@ export default function DailyPracticePage() {
             </div>
             <div className="flex items-center gap-3 bg-gradient-to-r from-coral to-nasturtium text-white px-6 py-3 rounded-full shadow-lg">
               <span className="text-xl">🔥</span>
-              <span className="font-bold">{stats.currentStreak} Tage</span>
+              <span className="font-bold">{stats.current_streak} Tage</span>
             </div>
           </div>
         </header>
 
         {/* Progress Hero */}
-        <ProgressHero stats={stats} userName={user.email?.split('@')[0] || 'Jules'} />
+        <ProgressHero stats={{
+            total_practiced: stats.practiceCount,
+            unique_words_count: stats.unique_words_count,
+            current_streak: stats.current_streak,
+            longest_streak: stats.longest_streak
+          }}
+          totalWords={stats.totalWords}
+          priorityCount={stats.priorityCount}
+        />
 
         {/* Practice Modes */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
