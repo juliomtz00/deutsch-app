@@ -1,9 +1,9 @@
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient } from '../lib/supabase'
 import { redirect } from 'next/navigation'
-import ProgressHero from '@/components/ProgressHero'
-import PracticeModes from '@/components/PracticeModes'
-import AddWordSection from '@/components/AddWordSection'
-import Header from '@/components/Header'
+import ProgressHero from '../components/ProgressHero'
+import PracticeModes from '../components/PracticeModes'
+import AddWordSection from '../components/AddWordSection'
+import Header from '../components/Header'
 
 export default async function HomePage() {
   const supabase = createServerClient()

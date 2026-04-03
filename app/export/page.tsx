@@ -1,6 +1,6 @@
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient } from '../../lib/supabase'
 import { redirect } from 'next/navigation'
-import ExportData from '@/components/ExportData'
+import ExportData from '../../components/ExportData'
 
 export default async function ExportPage() {
   const supabase = createServerClient()
