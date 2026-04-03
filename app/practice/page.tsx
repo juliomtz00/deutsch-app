@@ -2,16 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient } from '../../lib/supabase'
 import { useRouter } from 'next/navigation';
 import DailyPractice from '../../components/DailyPractice';
 import TranslationTest from '../../components/TranslationTest';
 import FillBlank from '../../components/FillBlank';
 import ProgressHero from '../../components/ProgressHero';
 import ModeCard from '../../components/ModeCard';
+import { cookies } from 'next/headers'
 
-export default function PracticePage() {
+export default async function DailyPracticePage() {
+  const cookieStore = cookies()
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createServerClient(cookieStore)
   
   const [user, setUser] = useState<any>(null);
   const [currentMode, setCurrentMode] = useState<string | null>(null);

@@ -4,9 +4,12 @@ import ProgressHero from '../components/ProgressHero'
 import PracticeModes from '../components/PracticeModes'
 import AddWordSection from '../components/AddWordSection'
 import Header from '../components/Header'
+import { cookies } from 'next/headers'
+
 
 export default async function HomePage() {
-  const supabase = createServerClient()
+  const cookieStore = cookies()
+  const supabase = createServerClient(cookieStore)
   
   const { data: { session } } = await supabase.auth.getSession()
   

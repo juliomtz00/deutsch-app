@@ -1,6 +1,5 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 
 export type Database = {
   public: {
@@ -111,5 +110,6 @@ export type Database = {
 // Client-side Supabase client
 export const createClient = () => createClientComponentClient<Database>()
 
-// Server-side Supabase client
-export const createServerClient = () => createServerComponentClient<Database>({ cookies })
+// Server-side Supabase client (pass cookies from the calling component)
+export const createServerClient = (cookieStore: any) => 
+  createServerComponentClient<Database>({ cookies: () => cookieStore })

@@ -1,6 +1,6 @@
-import { createServerClient } from '@/lib/supabase'
+import { createServerClient } from '../../../lib/supabase'
 import { redirect } from 'next/navigation'
-import PracticeSession from '@/components/PracticeSession'
+import PracticeSession from '../../../components/PracticeSession'
 
 export default async function DailyPracticePage() {
   const supabase = createServerClient()

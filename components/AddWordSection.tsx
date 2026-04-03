@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
+import { createClient } from '../lib/supabase'
 
 interface AddWordSectionProps {
   userId: string
