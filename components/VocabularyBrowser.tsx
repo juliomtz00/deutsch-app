@@ -21,7 +21,7 @@ interface VocabularyBrowserProps {
 export default function VocabularyBrowser({ initialVocabulary, userId }: VocabularyBrowserProps) {
   const [vocabulary, setVocabulary] = useState(initialVocabulary)
   const [search, setSearch] = useState('')
-  const supabase = createClient()
+  const supabase = createClient() as any
 
   const filtered = vocabulary.filter(word =>
     word.german.toLowerCase().includes(search.toLowerCase()) ||
