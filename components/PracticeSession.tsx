@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '../lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { AnyAaaaRecord } from 'node:dns'
 
 interface Word {
   id: string
@@ -40,7 +41,7 @@ export default function PracticeSession({ words, mode, userId }: PracticeSession
   const [userBlank, setUserBlank] = useState('')
   const [blankResult, setBlankResult] = useState<any>(null)
 
-  const supabase = createClient()
+  const supabase = createClient() as any 
   const router = useRouter()
   const currentWord = words[currentIndex]
 
@@ -113,20 +114,20 @@ export default function PracticeSession({ words, mode, userId }: PracticeSession
           confidence_rating: conf,
           grammar_score: gramScore,
           practice_mode: mode
-        })
+        } as any)
 
       // Update user stats
       const { data: stats } = await supabase
         .from('user_stats')
         .select('*')
         .eq('user_id', userId)
-        .single()
+        .single() as { data: any }
 
       if (stats) {
         const today = new Date().toISOString().split('T')[0]
-        const lastPractice = stats.last_practice_date
+        const lastPractice = (stats as any).last_practice_date
 
-        let newStreak = stats.current_streak
+        let newStreak = (stats as any).current_streak
         if (lastPractice !== today) {
           const yesterday = new Date()
           yesterday.setDate(yesterday.getDate() - 1)
@@ -142,9 +143,9 @@ export default function PracticeSession({ words, mode, userId }: PracticeSession
         await supabase
           .from('user_stats')
           .update({
-            total_practiced: stats.total_practiced + 1,
+            total_practiced: (stats as any).total_practiced + 1,
             current_streak: newStreak,
-            longest_streak: Math.max(newStreak, stats.longest_streak),
+            longest_streak: Math.max(newStreak, (stats as any).longest_streak),
             last_practice_date: today
           })
           .eq('user_id', userId)
