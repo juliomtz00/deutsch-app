@@ -13,6 +13,14 @@ export default function PracticeModes() {
       gradient: 'from-crystal-rose/20 to-transparent'
     },
     {
+      href: '/practice/paragraph',  // 👈 NEW!
+      icon: '✍️',
+      title: 'Paragraph Challenge',
+      description: 'Schreibe einen zusammenhängenden Text mit 10 Wörtern!',
+      badge: 'Kreativ',
+      gradient: 'from-nasturtium/20 to-transparent'
+    },
+    {
       href: '/practice/translation',
       icon: '🌍',
       title: 'Translation Test',
